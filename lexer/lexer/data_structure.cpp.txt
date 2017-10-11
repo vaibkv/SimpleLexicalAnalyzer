@@ -1,0 +1,137 @@
+# include "data_structure.h"
+
+static node *buckets_ofhashtbl[NO_OF_BUCKETS];
+
+void init_hashtable()
+{
+int i;
+for(i=0;i<NO_OF_BUCKETS;i++)
+buckets_ofhashtbl[i] = NULL; /*initializing hash table */
+}
+
+int hashpjw_func(char *key)
+{
+char *ptr;
+int val;
+
+/*HASH THE KEY PERFORMING BIT OPERATIONS ON IT*/
+
+val = 0;
+ptr = key ;
+
+while(*ptr != '\0')
+{
+int temp;
+val = ( val << 4) + ( *ptr ) ;
+if ( temp = ( val & 0xf0000000 ) )
+{
+val = val ^ ( temp >> 24 ) ;
+val = val ^ temp;
+}
+ptr++;
+}
+return ( val % NO_OF_BUCKETS ) ; 
+} /* This fuction  returns hash key generated between 0 and hash_tablesize-1 for a particular string */
+
+
+node *lookup( char *lexeme )
+{
+int k;
+k = hashpjw_func(lexeme) ; 
+node *temp = buckets_ofhashtbl[k];
+
+for(;temp != NULL;temp = temp->next_link)
+{
+if(!strcmp(temp->token,lexeme))
+return temp ;
+}
+return NULL ; /*This looks for the token value in the hash table.. if it is present then its corresponding   
+               node address is returned else NULL is returned */
+}
+
+
+int install_token(char *tok,char *tok_typ)
+{
+node *n;
+int hash;
+n = lookup(tok);
+if(n == NULL)
+{
+hash = hashpjw_func(tok);
+n=(node *)malloc(sizeof(node));
+if(n == NULL)
+return -1;
+n->token = _str_dup(tok);
+if(n->token == NULL)
+return -1;
+n->next_link = buckets_ofhashtbl[hash];
+buckets_ofhashtbl[hash] = n;
+n->token_type = _str_dup(tok_typ);
+if(n->token_type == NULL)
+return -1;
+}
+else 
+return -1;
+return 1;
+}
+
+
+char *_str_dup(char *d)
+{
+int l = strlen(d) + 1 ;
+
+char *ns = (char *)malloc(l * sizeof(char));
+strcpy(ns,d);
+if(ns == NULL)
+return NULL;
+else 
+return ns;
+}
+
+
+
+void clear_RAM()
+{
+int j;
+node *np , *t;
+
+for(j=0;j<NO_OF_BUCKETS;j++)
+{
+if(buckets_ofhashtbl[j] != NULL)
+{ 
+np = buckets_ofhashtbl[j];
+while(np != NULL)
+{
+t=np->next_link;
+free(np->token);
+free(np->token_type);
+free(np);
+np = t;
+}
+}
+}
+}
+
+
+
+
+void display_hashtbl()
+{
+int j;
+node *temp;
+
+for(j=0;j<NO_OF_BUCKETS;j++)
+{
+if(buckets_ofhashtbl[j] == NULL)
+printf("\nTHIS BUCKET HAS NOTHING TO SHOW");
+
+if(buckets_ofhashtbl[j] != NULL)
+{
+printf("\nTHIS IS BUCKET NUMBER %d : \n",j);
+temp = buckets_ofhashtbl[j];
+
+while(temp->next_link != NULL)
+{
+printf("\nTOKEN = %s\tTOKEN TYPE = %s",temp->token,temp->token_type);
+temp = temp->next_link;
+}}}}

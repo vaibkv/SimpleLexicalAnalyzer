@@ -1,0 +1,10 @@
+# ifndef INPUT_H
+# define INPUT_H
+# include <stdlib.h>
+# include <stdio.h> 
+
+
+void input_function();
+void rem_ove();
+
+# endif

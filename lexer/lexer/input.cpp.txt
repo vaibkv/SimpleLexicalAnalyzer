@@ -1,0 +1,39 @@
+# include "input.h"
+
+void input_function()
+
+{
+char ch,another;
+FILE *fp;
+fp=fopen("INPUT_FILE.C","w");
+
+if(fp==NULL)
+{
+puts("\nError : Unable to create file INPUT_FILE.C");
+another=getchar();
+exit(0);
+}
+
+printf("\nENTER A SIMPLE C CODE....BE KIND");
+printf("\nJUST PRESS CNTRL+Z WHEN YOU THINK YOU ARE FINISHED");
+
+while((ch=fgetc(stdin))!=EOF)
+fputc(ch,fp);
+
+fclose(fp);
+
+}
+
+
+
+void rem_ove()
+{
+int i;
+i=remove("INPUT_FILE.C");
+
+if(i==0)
+printf("\nTHE INPUT C FILE HAS BEEN SUCCESSFULLY REMOVED FROM THE DISC");
+else
+printf("\nError : Unable to remove the input c file from the disc");
+
+}

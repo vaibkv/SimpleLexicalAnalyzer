@@ -1,0 +1,26 @@
+# include "lexer.cpp"
+# include "input.cpp"
+
+int main()
+{
+char another ;
+
+input_function();
+
+init_hashtable();
+
+install_keywords();
+
+install_op();
+
+lexer();
+
+clear_RAM();
+
+rem_ove();
+
+another = getchar();
+
+return 0 ; 
+
+}

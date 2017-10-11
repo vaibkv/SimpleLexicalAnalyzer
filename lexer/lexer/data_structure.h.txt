@@ -1,0 +1,31 @@
+# ifndef DATA_STRUCTURE_H
+# define DATA_STRUCTURE_H
+
+# include <string.h>
+# include <stdio.h>
+
+# define NO_OF_BUCKETS 101
+
+
+typedef struct _node
+{
+char *token;
+char *token_type;
+struct _node *next_link;
+}node;
+
+void init_hashtable();
+
+int hashpjw_func(char *);
+
+int install_token(char *,char *);
+
+node *lookup(char *);
+
+char *_str_dup(char *);
+
+void clear_RAM();
+
+void display_hashtbl();
+
+# endif
